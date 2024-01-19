@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\DashboardController; //<---- Import del controller precedentemente creato!
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,10 +19,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::middleware(['auth'])
+    ->prefix('admin') //definisce il prefisso "admin/" per le rotte di questo gruppo
+    ->name('admin.') //definisce il pattern con cui generare i nomi delle rotte cioè "admin.qualcosa"
+    ->group(function () {
+
+        //Siamo nel gruppo quindi:
+        // - il percorso "/" diventa "admin/"
+        // - il nome della rotta ->name("dashboard") diventa ->name("admin.dashboard")
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+});
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
