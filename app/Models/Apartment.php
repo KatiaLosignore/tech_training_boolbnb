@@ -38,4 +38,16 @@ class Apartment extends Model
     {
         return $this->belongsToMany(Sponsorship::class);
     }
+
+    // Collegamento a Message
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    // Collegamento a Visit
+    public function visits()
+    {
+        return $this->hasMany(Visit::class);
+    }
 }
