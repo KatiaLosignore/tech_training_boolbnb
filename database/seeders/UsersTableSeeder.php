@@ -26,7 +26,7 @@ class UsersTableSeeder extends Seeder
         $user->date_of_birth = $faker->dateTimeBetween('1980-01-01', '2000-12-31')->format('Y-m-d');
         $user->email = $faker->unique()->safeEmail();
         $user->email_verified_at = null;
-        $user->password = Hash::make($faker->password());
+        $user->password = Hash::make('password');
         $user->remember_token = null;
 
         $user->save();
