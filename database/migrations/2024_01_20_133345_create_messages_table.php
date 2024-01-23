@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
 
             // Chiave esterna collegata alla tabella "apartments"
-            $table->foreignId('apartment_id')->constrained();
+            $table->foreignId('apartment_id')->nullable()->constrained();
 
             $table->string('name');
             $table->string('lastname');
