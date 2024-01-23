@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Apartment;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class ApartmentController extends Controller
@@ -14,8 +15,9 @@ class ApartmentController extends Controller
      */
     public function index()
     {
+        $apartments = Apartment::all();
         // Restituisce tutti gli appartamenti
-        return Apartment::all();
+        return view('admin.apartments.index', compact('apartments'));
     }
 
     /**
@@ -52,7 +54,7 @@ class ApartmentController extends Controller
     public function show(Apartment $apartment)
     {
         // Restituisce un appartamento specifico
-        return $apartment;
+        return view('admin.apartments.show', compact('apartment'));
     }
 
     /**
