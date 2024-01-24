@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Apartment;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreApartmentRequest;
+use App\Models\Service;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ApartmentController extends Controller
 {
@@ -16,8 +20,9 @@ class ApartmentController extends Controller
     public function index()
     {
         $apartments = Apartment::all();
-        // Restituisce tutti gli appartamenti
-        return view('admin.apartments.index', compact('apartments'));
+        $services = Service::all();
+        // Restituisce tutti gli appartamenti e servizi
+        return view('admin.apartments.index', compact('apartments', 'services'));
     }
 
     /**
@@ -27,7 +32,9 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::all();
+        $services = Service::all();
+        return view('admin.apartments.create', compact('services', 'users'));
     }
 
     /**
@@ -36,13 +43,23 @@ class ApartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreApartmentRequest $request)
     {
-        // Crea un nuovo appartamento
-        $apartment = Apartment::create($request->all());
+        $form_data = $request->validated();
 
-        // Restituisce l'appartamento appena creato
-        return $apartment;
+        if ($request->hasFile('photo')) {
+            $path = Storage::put('cover', $request->photo);
+            $form_data['photo'] = $path;
+        }
+
+        // Crea un nuovo appartamento
+        $apartment = Apartment::create($form_data);
+
+        if ($request->has('services')) {
+            $apartment->services()->attach($request->services);
+        }
+
+        return redirect()->route('admin.apartments.show', $apartment->id)->with('status', 'Appartamento creato con successo!');
     }
 
     /**

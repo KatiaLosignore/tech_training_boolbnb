@@ -89,7 +89,15 @@
             <div class="">
                 @include('partials.sidebar')
             </div>
-            @yield('content')
+
+            <div class="col-10">
+
+                @include('partials.errors')
+                @include('partials.messages')
+
+                @yield('content')
+            </div>
+            
         </main>
     </div>
 </body>

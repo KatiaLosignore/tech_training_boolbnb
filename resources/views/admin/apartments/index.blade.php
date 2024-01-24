@@ -3,6 +3,7 @@
 
 @section('content')
     <div class="container my-5">
+        <a href="{{route('admin.apartments.create')}}" class="btn btn-primary mt-4 mb-4 fw-bold">Create a new Apartment</a>
         <h1 class="mb-5 text-primary fs-1">The list of my Bnb</h1>
         <table class="table table-striped table-hover">
             <thead>
@@ -17,6 +18,7 @@
                     <th scope="col">Lat</th>
                     <th scope="col">Lon</th>
                     <th scope="col">Url Photo</th>
+                    <th scope="col">Services</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -33,6 +35,11 @@
                         <td>{{ $apart->lat }}</td>
                         <td>{{ $apart->lon }}</td>
                         <td>{{ $apart->photo }}</td>
+                        <td>
+                            @foreach ($apart->services as $service)
+                               <div class="mt-2">{{ $service->name }}</div>
+                            @endforeach
+                        </td>
                         <td><a class="btn btn-primary me-2 fw-bold" href="{{route('admin.apartments.show', $apart->id)}}">Detail</a></td>
                     </tr>
                 @endforeach
