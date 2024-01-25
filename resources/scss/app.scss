@@ -1,5 +1,19 @@
 @import '~bootstrap/scss/bootstrap';
 
+body {
+    margin: 0 auto;
+    background-color: white;
+}
+
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    --bs-table-bg-type: none;
+}
+
+thead, tbody, tfoot, tr, td, th {
+    border-style: none;
+}
+
 
 .my-img-thumb {
     width: 100%;

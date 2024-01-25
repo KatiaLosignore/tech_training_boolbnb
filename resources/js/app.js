@@ -7,6 +7,30 @@ import.meta.glob([
 ])
 
 
+//Conferma di eliminazione apartment
+
+const deleteButtons = document.querySelectorAll('.form_delete_apartment button[type="submit"]');
+
+
+deleteButtons.forEach(button => {
+    button.addEventListener('click', event => {
+        event.preventDefault();
+
+        const modal = document.getElementById('confirmModal');
+
+        const bootstrapModal = new bootstrap.Modal(modal);
+        bootstrapModal.show();
+
+        const confirmDeleteBtn = modal.querySelector('.btn.btn-danger')
+
+        confirmDeleteBtn.addEventListener('click', () => {
+            button.parentElement.submit();
+        });
+    })
+});
+
+
+
 //Funzione per eliminare photo
 function handleSubmitForm() {
     const formDelete = document.getElementById('form-delete');

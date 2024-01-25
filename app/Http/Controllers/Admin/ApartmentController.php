@@ -126,12 +126,20 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
+
+        if($apartment->photo) {
+            Storage::delete($apartment->photo);
+        }
+
+        // Cancella la riga dalla tabella pivot ed elimina la relazione tra due record
+        $apartment->services()->detach();
+
         // Cancella un appartamento
         $apartment->delete();
 
-        // Restituisce una risposta vuota
-        return response()->noContent();
+        return redirect()->route('admin.apartments.index');
     }
+
 
     public function deleteImage($id) {
 
