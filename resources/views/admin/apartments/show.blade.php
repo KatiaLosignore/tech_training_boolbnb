@@ -15,6 +15,9 @@
         @endif
         <div class="card-body">
           <h3 class="card-title fw-bold text-primary mb-4">Name: {{ $apartment->name }}</h3>
+          <h5 class="fw-bold text-secondary">User:
+               {{$apartment->user->name}} {{$apartment->user->surname}}</option>
+          </h5>
           <h5 class="fw-bold text-secondary">ID: {{ $apartment->id}}</h5>
           <h5 class="fw-bold text-secondary">Rooms: {{ $apartment->rooms}}</h5>
           <h5 class="fw-bold text-secondary">Beds: {{ $apartment->beds}}</h5>

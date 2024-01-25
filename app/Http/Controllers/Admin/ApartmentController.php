@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Apartment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreApartmentRequest;
+use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -71,6 +72,7 @@ class ApartmentController extends Controller
     public function show(Apartment $apartment)
     {
         // Restituisce un appartamento specifico
+
         return view('admin.apartments.show', compact('apartment'));
     }
 
@@ -82,7 +84,9 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        //
+        $users = User::all();
+        $services = Service::all();
+        return view('admin.apartments.edit', compact('apartment','services', 'users'));
     }
 
     /**
@@ -92,13 +96,26 @@ class ApartmentController extends Controller
      * @param  \App\Models\Apartment  $apartment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Apartment $apartment)
+    public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
-        // Aggiorna un appartamento esistente
-        $apartment->update($request->all());
+        $validated_data = $request->validated();
 
-        // Restituisce l'appartamento aggiornato
-        return $apartment;
+        if ($request->hasFile('photo')) {
+
+            if($apartment->photo) {
+                Storage::delete($apartment->photo);
+            }
+
+            $path = Storage::put('cover', $request->photo);
+            $validated_data['photo'] = $path;
+        }
+
+        $apartment->services()->sync($request->services);
+
+        $apartment->update($validated_data);
+
+        return redirect()->route('admin.apartments.show', $apartment->id)->with('status', 'Appartamento modificato con successo!');
+
     }
 
     /**
@@ -114,5 +131,19 @@ class ApartmentController extends Controller
 
         // Restituisce una risposta vuota
         return response()->noContent();
+    }
+
+    public function deleteImage($id) {
+
+        $apartment = Apartment::where('id', $id)->firstOrFail();
+
+        if ($apartment->photo) {
+            Storage::delete($apartment->photo);
+            $apartment->photo = null;
+            $apartment->save();
+        }
+
+        return redirect()->route('admin.apartments.edit', $apartment->id);
+
     }
 }

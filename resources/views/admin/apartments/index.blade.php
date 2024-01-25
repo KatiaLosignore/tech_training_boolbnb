@@ -40,7 +40,10 @@
                                <div class="mt-2">{{ $service->name }}</div>
                             @endforeach
                         </td>
-                        <td><a class="btn btn-primary me-2 fw-bold" href="{{route('admin.apartments.show', $apart->id)}}">Detail</a></td>
+                        <td class="d-flex">
+                            <a class="btn btn-primary me-2 fw-bold" href="{{route('admin.apartments.show', $apart->id)}}">Detail</a>
+                            <a class="btn btn-warning me-2 fw-bold" href="{{route('admin.apartments.edit', $apart->id)}}">Edit</a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
