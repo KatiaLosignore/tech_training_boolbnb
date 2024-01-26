@@ -2,13 +2,14 @@
 
 
 @section('content')
-    <div class="container my-5">
-        <a href="{{route('admin.apartments.create')}}" class="btn btn-primary mt-4 mb-4 fw-bold">Create a new Apartment</a>
-        <h1 class="mb-5 text-primary fs-1">The list of my Bnb</h1>
+    <div class="container my-5 mt-5 rounded-4">
+        <a href="{{route('admin.apartments.create')}}" class="btn btn-primary mt-4 mb-4 fw-bold fs-5">Create a new Apartment</a>
+        <h1 class="mb-5 text-primary fs-1 mt-3">The list of my Bnb</h1>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">User</th>
                     <th scope="col">Name</th>
                     <th scope="col">Rooms</th>
                     <th scope="col">Beds</th>
@@ -26,6 +27,7 @@
                 @foreach ($apartments as $apart)
                     <tr>
                         <th scope="row">{{ $apart->id }}</th>
+                        <td>{{ $apart->user->name }} {{ $apart->user->surname }}</td>
                         <td>{{ $apart->name }}</td>
                         <td>{{ $apart->rooms }}</td>
                         <td>{{ $apart->beds }}</td>
@@ -40,7 +42,7 @@
                                <div class="mt-2">{{ $service->name }}</div>
                             @endforeach
                         </td>
-                        <td class="d-flex bg-white">
+                        <td class="d-flex align-items-center justify-content-center bg-white">
                             <a class="btn btn-primary me-2 fw-bold" href="{{route('admin.apartments.show', $apart->id)}}">Detail</a>
                             <a class="btn btn-warning me-2 fw-bold text-white" href="{{route('admin.apartments.edit', $apart->id)}}">Edit</a>
 

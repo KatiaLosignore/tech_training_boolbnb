@@ -8,6 +8,7 @@ use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Service;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,7 +21,8 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::all();
+        $user = Auth::user();
+        $apartments = Apartment::where('user_id', $user->id)->get();
         $services = Service::all();
         // Restituisce tutti gli appartamenti e servizi
         return view('admin.apartments.index', compact('apartments', 'services'));
@@ -47,11 +49,13 @@ class ApartmentController extends Controller
     public function store(StoreApartmentRequest $request)
     {
         $form_data = $request->validated();
-
+        $user = Auth::user();
         if ($request->hasFile('photo')) {
             $path = Storage::put('cover', $request->photo);
             $form_data['photo'] = $path;
         }
+
+        $form_data['user_id'] = $user->id;
 
         // Crea un nuovo appartamento
         $apartment = Apartment::create($form_data);

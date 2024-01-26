@@ -30,7 +30,17 @@ thead, tbody, tfoot, tr, td, th {
     }
 
 }
+button .admin {
+    color: rgb(87, 84, 84);
+    font-size: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
+button:hover {
+    background-color:aqua;
+    color: blue;
+}
 
 
 
