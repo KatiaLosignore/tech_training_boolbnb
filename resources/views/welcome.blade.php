@@ -1,10 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.home')
 @section('content')
 
 <div class="container">
     <div class="container py-5">
         <div class="d-flex justify-content-center align-items-center">
             <img class="rounded-4" src="https://previews.123rf.com/images/madmaxer/madmaxer1710/madmaxer171000711/87532936-3d-illustrazione-di-casa-con-chiave-su-sfondo-della-citt%C3%A0.jpg" alt="logo">
+
         </div>
         {{-- <div class="logo_laravel">
             <svg viewBox="0 0 651 192" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-25">

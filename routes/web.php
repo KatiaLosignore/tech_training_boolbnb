@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\ApartmentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController; //<---- Import del controller precedentemente creato!
+use App\Http\Controllers\Admin\MessageController;
+use App\Models\Message;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +35,7 @@ Route::middleware(['auth','verified'])
         // - il percorso "/" diventa "admin/"
         // - il nome della rotta ->name("dashboard") diventa ->name("admin.dashboard")
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/messages', [MessageController::class, 'index'])->name('messages');
         Route::resource('apartments', ApartmentController::class);
 
         Route::delete('apartments/{id}/deleteImage', [ApartmentController::class, 'deleteImage'])->name('apartments.deleteImage');

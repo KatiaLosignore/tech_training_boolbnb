@@ -24,7 +24,7 @@ class ApartmentController extends Controller
         $user = Auth::user();
         $apartments = Apartment::where('user_id', $user->id)->get();
         $services = Service::all();
-        // Restituisce tutti gli appartamenti e servizi
+        // Restituisce tutti gli appartamenti di uno User e servizi
         return view('admin.apartments.index', compact('apartments', 'services'));
     }
 
