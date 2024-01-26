@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.home')
 
 @section('content')
 <div class="container">
@@ -24,7 +24,7 @@
             <div class="fs-3 my-5 py-3 text-center">
                 <button class="rounded-5 admin py-2 px-4">
                     <a href="{{ route('admin.apartments.index') }}"  class="nav-link active" aria-current="page">
-                            <strong>My Apartments</strong>
+                            <strong>Click here to Login</strong>
                     </a>
                 </button>
             </div>

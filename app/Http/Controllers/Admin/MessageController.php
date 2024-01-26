@@ -18,9 +18,15 @@ class MessageController extends Controller
         $userId = $user->id;
         $apartment = Apartment::where('user_id', $userId)->first();
 
-        $apartmentId = $apartment->id;
-        $messages = Message::where('apartment_id', $apartmentId)->get();
+        if ($apartment) {
+            $apartmentId = $apartment->id;
+            $messages = Message::where('apartment_id', $apartmentId)->get();
 
-        return view('admin.messages', compact('messages', 'apartment'));
+            return view('admin.messages', compact('messages', 'apartment'));
+        } else {
+            //Nessun appartamento trovato
+            return view('admin.messages', ['messages' => [], 'apartment' => null]);
+    
+        }
     }
 }

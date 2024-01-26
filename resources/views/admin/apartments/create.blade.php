@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.home')
 
 
 @section('content')
@@ -7,7 +7,7 @@
 
     @csrf
 
-    <div class="mb-3 mt-3">
+    <div class="mb-3 mt-5">
         <label for="user_id" class="form-label fw-bold">Select User</label>
         <select class="form-select @error('user_id') is-invalid @enderror" name="user_id" id="user_id">
             <option @selected(old('user_id')=='') value="">No User</option>
@@ -118,8 +118,15 @@
         @enderror
     </div>
 
-    <button type="submit" class="btn btn-primary">Salva</button>
+    <button type="submit" class="btn btn-primary mb-5 fw-bold">Save</button>
+
 
 </form>
+
+<button class="rounded-2 text-secondary py-2 px-2 mb-3">
+    <a href="{{ route('admin.apartments.index') }}"  class="nav-link active" aria-current="page">
+            <strong class="fs-6">Back</strong>
+    </a>
+</button>
 
 @endsection
