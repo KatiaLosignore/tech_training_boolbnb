@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.home')
 
 @section('content')
 
@@ -7,7 +7,7 @@
         @csrf
         @method('PUT')
 
-        <div class="mb-3 mt-3">
+        {{-- <div class="mb-3 mt-3">
             <label for="user_id" class="form-label fw-bold">Select User</label>
             <select class="form-select @error('user_id') is-invalid @enderror" name="user_id" id="user_id">
                 <option @selected(old('user_id', $apartment->user_id)=='') value="">No User</option>
@@ -20,8 +20,8 @@
                     {{$message}}
                 </div>
             @enderror
-        </div>
-        <div class="mb-3">
+        </div> --}}
+        <div class="mb-3 mt-4">
             <label for="name" class="form-label fw-bold">Name</label>
             <input type="text" class="form-control @error('name') is-invalid @enderror " id="name" name="name" value="{{old('name', $apartment->name)}}">
             @error('name')
@@ -136,10 +136,15 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary">Salva</button>
-
+        <button type="submit" class="btn btn-primary mb-5 fw-bold">Save</button>
 
     </form>
+
+    <button class="rounded-2 text-secondary py-2 px-2 mb-3">
+        <a href="{{ route('admin.apartments.index') }}"  class="nav-link active" aria-current="page">
+                <strong class="fs-6">Back</strong>
+        </a>
+    </button>
 
     <form id="form-delete" action="{{route('admin.apartments.deleteImage', ['id' => $apartment->id])}}" method="POST">
         @csrf

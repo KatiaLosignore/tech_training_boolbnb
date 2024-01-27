@@ -7,7 +7,7 @@
 
     @csrf
 
-    <div class="mb-3 mt-5">
+    {{-- <div class="mb-3 mt-5">
         <label for="user_id" class="form-label fw-bold">Select User</label>
         <select class="form-select @error('user_id') is-invalid @enderror" name="user_id" id="user_id">
             <option @selected(old('user_id')=='') value="">No User</option>
@@ -20,8 +20,8 @@
                 {{$message}}
             </div>
         @enderror
-    </div>
-    <div class="mb-3">
+    </div> --}}
+    <div class="mb-3 mt-4">
         <label for="name" class="form-label fw-bold">Name</label>
         <input type="text" class="form-control @error('name') is-invalid @enderror " id="name" name="name" value="{{old('name')}}">
         @error('name')
