@@ -57,6 +57,8 @@ class ApartmentController extends Controller
 
         $form_data['user_id'] = $user->id;
 
+        $form_data['visible'] = $request->has('visible');
+
         // Crea un nuovo appartamento
         $apartment = Apartment::create($form_data);
 
@@ -113,6 +115,9 @@ class ApartmentController extends Controller
             $path = Storage::put('cover', $request->photo);
             $validated_data['photo'] = $path;
         }
+
+        $validated_data['visible'] = $request->has('visible');
+
 
         $apartment->services()->sync($request->services);
 

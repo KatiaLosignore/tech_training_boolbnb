@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('lat', 11, 8);
             $table->decimal('lon', 11, 8);
             $table->string('photo', 255)->nullable();
-            $table->tinyInteger('visible')->default(1);
+            $table->boolean('visible')->default(true);
             $table->timestamps();
         });
     }

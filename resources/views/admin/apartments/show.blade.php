@@ -35,7 +35,7 @@
             <a href="{{ route('admin.apartments.index') }}"  class="nav-link active" aria-current="page">
                     <strong class="fs-6">Back</strong>
             </a>
-        </button>
+          </button>
         </div>
       </div>
     </div>

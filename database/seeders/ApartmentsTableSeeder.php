@@ -30,7 +30,7 @@ class ApartmentsTableSeeder extends Seeder
             $apartment->lat = $faker->latitude(45.2, 45.5);
             $apartment->lon = $faker->longitude(8.8, 9.3);
             $apartment->photo = $faker->imageUrl();
-            $apartment->visible = true;
+            $apartment->visible = $faker->boolean();
 
             $apartment->save();
         }

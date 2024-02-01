@@ -138,6 +138,12 @@
             @enderror
         </div>
 
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="visible" name="visible" value="1" {{ $apartment->visible ? 'checked' : ''}}>
+            <label class="form-check-label" for="visible">Visible</label>
+        </div>
+
+
         <button type="submit" class="btn btn-primary mb-5 fw-bold">Save</button>
 
     </form>
