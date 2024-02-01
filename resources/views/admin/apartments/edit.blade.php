@@ -66,6 +66,7 @@
                 </div>
             @enderror
         </div>
+        <!-- Address -->
         <div class="mb-3">
             <label for="address" class="form-label fw-bold">Address</label>
             <input type="text" class="form-control @error('address') is-invalid @enderror " id="address" name="address" value="{{old('address', $apartment->address)}}">
@@ -74,25 +75,26 @@
                     {{$message}}
                 </div>
             @enderror
-        </div>
-        <div class="mb-3">
-            <label for="lat" class="form-label fw-bold">Lat</label>
-            <input type="text" class="form-control @error('lat') is-invalid @enderror "  id="lat" name="lat" value="{{old('lat', $apartment->lat)}}" placeholder="Inserisci la latitudine">
+            <ul id="locations" class="d-none list group"></ul>
+
+            <!-- Latitude (hidden) -->
+            <input type="hidden" class="form-control @error('lat') is-invalid @enderror "  id="lat" name="lat" value="{{old('lat', $apartment->lat)}}">
             @error('lat')
                 <div class="invalid-feedback">
                     {{$message}}
                 </div>
             @enderror
-        </div>
-        <div class="mb-3">
-            <label for="lon" class="form-label fw-bold">Lon</label>
-            <input type="text" class="form-control @error('lon') is-invalid @enderror " id="lon" name="lon" value="{{old('lon', $apartment->lon)}}" placeholder="Inserisci la longitudine">
+
+            <!-- Latitude (hidden) -->
+            <input type="hidden" class="form-control @error('lon') is-invalid @enderror " id="lon" name="lon" value="{{old('lon', $apartment->lon)}}">
             @error('lon')
                 <div class="invalid-feedback">
                     {{$message}}
                 </div>
             @enderror
+
         </div>
+        <!-- Fine Address -->
 
         <div class="mb-3">
             <label for="photo" class="form-label fw-bold">Select image</label>
@@ -152,5 +154,59 @@
 
     </form>
 
+<!-- importo la CDN di axios -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    const addressDOMElement = document.getElementById('address');
+    const latitudeDOMElement = document.getElementById('lat');
+    const longitudeDOMElement = document.getElementById('lon');
+    const locationsDOMElement = document.getElementById('locations');
+    let timer;
+
+    addressDOMElement.addEventListener('keyup', (event) => {
+        clearTimeout(timer);
+        timer = setTimeout( () => {
+            callApi();
+        }, 500);
+    });
+
+    function callApi() {
+        if(addressDOMElement.value.length >= 5) {
+            const params = new URLSearchParams({
+                location: address.value
+            });
+            const url = '/api/geodata?' + params.toString();
+            axios.get(url).then( response => {
+                console.log(response.data);
+                createLocationsList(response.data);
+            });
+        }
+    }
+
+    function createLocationsList(locations) {
+        locationsDOMElement.innerHTML = '';
+        locationsDOMElement.classList.remove('d-none');
+
+        locations.forEach( location => {
+            const listItemDOMElement = document.createElement('li');
+            listItemDOMElement.classList.add('list-group-item');
+            listItemDOMElement.setAttribute('role', 'button');
+
+            listItemDOMElement.innerText = location.address;
+
+            listItemDOMElement.addEventListener('click', () => {
+                latitudeDOMElement.value = location.position.lat;
+                longitudeDOMElement.value = location.position.lon;
+                addressDOMElement.value = location.address;
+                locationsDOMElement.classList.add('d-none');
+                locationsDOMElement.innerHTML = '';
+            });
+
+            locationsDOMElement.append(listItemDOMElement);
+        });
+    }
+
+</script>
 
 @endsection
