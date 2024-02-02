@@ -21,4 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/geodata', [TomtomController::class, 'getGeoData']);
+
 Route::get('/apartments', [ApartmentController::class, 'getApartments']);
+
+Route::get('/apartment/{id}', [ApartmentController::class, 'show']);

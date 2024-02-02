@@ -14,14 +14,29 @@ class ApartmentController extends Controller
     // $apartments = Apartment::where('visible', 1)->get();
 
         // Utilizzo del Local Scope
-        $apartments = Apartment::visible()->with('services')->get();
+        $apartments = Apartment::visible()->with('services')->paginate(12);
         return response()->json([
             'success' => true,
-            'data' => $apartments
+            'results' => $apartments
         ]);
     }
 
+    public function show($id) {
+        $apartment = Apartment::where('id', $id)->with('services')->first();
 
+        if ($apartment) {
+            return response()->json([
+                'success' => true,
+                'apartment' => $apartment
+            ]);
+        }  else {
+            return response()->json([
+                'success' => false,
+                'error' => 'Apartment not found!'
+            ]);
+        }
+
+    }
 
 
 
