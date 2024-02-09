@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ApartmentController;
+use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\TomtomController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,3 +26,5 @@ Route::get('/geodata', [TomtomController::class, 'getGeoData']);
 Route::get('/apartments', [ApartmentController::class, 'getApartments']);
 
 Route::get('/apartment/{id}', [ApartmentController::class, 'show']);
+
+Route::post('/messages', [MessageController::class, 'store']);
